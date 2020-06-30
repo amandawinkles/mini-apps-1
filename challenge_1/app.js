@@ -8,7 +8,7 @@ var players, playerX, playerO, activePlayer, win, tie;
 
 init();
 
-//move made func
+//make move func
   //activePlayer
 
 //pass to next player func
