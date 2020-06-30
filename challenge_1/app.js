@@ -8,8 +8,17 @@ var players, playerX, playerO, activePlayer, win, tie;
 
 init();
 
+//move made func
+  //activePlayer
+
+//pass to next player func
+
+//win or tie func
+  //message displayed
+  //end ability to make a move
+
 //new game button calls init func
-document.querySelector('.reset-button').addEventListener('click', init); //reset-button null
+document.querySelector(".reset-button").addEventListener('click', init);
 
 //reset game by initializing app w/ init function
 function init() {
@@ -18,6 +27,7 @@ function init() {
   activePlayer = players[0];
   win = 0;
   tie = 0;
+
+  document.querySelector("#x").style.display = 'none';
+  document.querySelector('#o').style.display = 'none';
 };
-
-
