@@ -4,12 +4,12 @@
 
 //the app detects a win or tie and displays an appropriate message
 
-var players, activePlayer, win, tie;
+var players, playerX, playerO, activePlayer, win, tie;
 
 init();
 
 //new game button calls init func
-document.querySelector('.reset-button').addEventListener('click', init);
+document.querySelector('.reset-button').addEventListener('click', init); //reset-button null
 
 //reset game by initializing app w/ init function
 function init() {
