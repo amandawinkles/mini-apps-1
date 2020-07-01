@@ -39,6 +39,7 @@ document.querySelector(".reset-button").addEventListener("click", init);
 
 //reset game by initializing app w/ init function
 function init() {
+  document.querySelectorAll("#board td").forEach((cell) => cell.innerText = '');
   playerX = document.getElementById("player-x");
   playerO = document.getElementById("player-o");
   activePlayer = playerX;
