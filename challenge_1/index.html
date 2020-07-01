@@ -8,32 +8,29 @@
   <body>
     <div class="container">
       <h1 class="title">Tic Tac Toe</h1>
-      <table rules="all">
+      <table id="board" rules="all">
         <tr>
-          <td style="width: 165px; height: 165px"></td>
-          <td style="width: 165px; height: 165px"></td>
-          <td style="width: 165px; height: 165px"></td>
+          <td id="1" style="width: 165px; height: 165px"></td>
+          <td id="2" style="width: 165px; height: 165px"></td>
+          <td id="3" style="width: 165px; height: 165px"></td>
         </tr>
         <tr>
-          <td style="width: 165px; height: 165px"></td>
-          <td style="width: 165px; height: 165px"></td>
-          <td style="width: 165px; height: 165px"></td>
+          <td id="4" style="width: 165px; height: 165px"></td>
+          <td id="5" style="width: 165px; height: 165px"></td>
+          <td id="6" style="width: 165px; height: 165px"></td>
         </tr>
         <tr>
-          <td style="width: 165px; height: 165px"></td>
-          <td style="width: 165px; height: 165px"></td>
-          <td style="width: 165px; height: 165px"></td>
+          <td id="7" style="width: 165px; height: 165px"></td>
+          <td id="8" style="width: 165px; height: 165px"></td>
+          <td id="9" style="width: 165px; height: 165px"></td>
         </tr>
 
       </table>
       <div class="bottom-bar">
-        <a href="#" class="player" id="player-x">player X</a>
+        <p class="player" id="player-x">player X</p>
         <button class="reset-button" id="reset">New Game</button>
-        <a href="#" class="player" id="player-o">player O</a>
+        <p class="player" id="player-o">player O</p>
       </div>
-
-      <img src="images/x for tic-tac-toe.png" class="play-pieces" id="x">
-      <img src="images/o for tic-tac-toe.png" class="play-pieces" id="o">
     </div>
 
     <script src="app.js"></script>
