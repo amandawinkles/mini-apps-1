@@ -2,13 +2,20 @@
 <html>
   <head>
     <title>JSON to CSV Mini App</title>
+    <script src=""></script>
   </head>
   <body>
     <div class="container">
       <h1 class="title">JSON --> CSV</h1>
-      <label for="json">JSON:</label>
-      <input type="text" id="user-input-form" required minlength="5" size="30">
-      <input class="submit-button" type="button" value="Submit">
+      <form action="#" id="send-JSON" method="post">
+        <label for="json">JSON:</label>
+        <textarea id="user-input-form" required></textarea>
+        <input class="submit-button" type="button" value="Submit">
+      </form>
+    </div>
+    <div>
+      <script src="client/scripts/app.js"></script>
+      <script src="client/scripts/httpRequests.js"></script>
     </div>
   </body>
 </html>
