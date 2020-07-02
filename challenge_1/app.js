@@ -1,4 +1,5 @@
 var playerX, playerO, activePlayer, win, tie, piece, board, alertMessage;
+//can introduce bugs
 
 init();
 
@@ -7,6 +8,9 @@ var playCount = 0;
 document.querySelectorAll("#board td").forEach((cell) => cell.addEventListener("click", function(cell) {
   makeMove(cell);
 }));
+//make new lines & chain methods
+
+//refactor funcs to do less, and comment w/FIX ME or TODO (edge cases, eg)
 
 function makeMove(cell) {
   if (activePlayer === playerX) {
@@ -58,7 +62,11 @@ function winOrTie(board) {
 
   win = false;
 
+//is there a way for me to simplify this:
+//const qualifiesForWin = 0
+//const variables reset with each func call, so const cant chnge in same invocation, but can in different ones //will be resolved to a value only once in one invocation
   if (playCount >= 5) {
+    //can make each of these variables //simplify this
     if (((possibleWins['0'][0].innerText === 'X') && (possibleWins['0'][1].innerText === 'X') && (possibleWins['0'][2].innerText === 'X')) || ((possibleWins['0'][0].innerText === 'O') && (possibleWins['0'][1].innerText === 'O') && (possibleWins['0'][2].innerText === 'O'))) {
       alertWinOrTie('win');
       win = true;
