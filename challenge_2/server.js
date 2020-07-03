@@ -10,20 +10,36 @@
 //child records in the JSON will always be in a property called `children`
 
 const express = require('express');
-const eJson = require('express-json');
+const bodyParser = require('body-parser');
 const static = require('express-static');
+const path = require('path');
 const app = express();
 const port = 3000;
 
-// app.get('/', (req, res) => {
-//   res.render();
-// });
+app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, './client')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.post('/', (req, res) => {
-//   res.send()
-// });
+//Use Express to serve up an index.html file and its associated assets
+app.get('/', (req, res, next) => {
+  let options = {
+    setHeaders:  function(res, path, stat) {
+      res.set()
+    }
+  }
+  //res.sendFile();
+});
 
-app.get('/', (req, res) => res.send('Hello World!'));
+app.get('/', (req, res) => res.render('index'));
+
+//parse json in post request
+app.post('/', (req, res, next) => { //add endpoint for type converter file
+  //console.log('req.body', req.body);
+  res.render(); //render type converter file
+  res.end();
+  next();
+});
 
 
 
@@ -31,3 +47,5 @@ app.get('/', (req, res) => res.send('Hello World!'));
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`));
 
 module.exports = app;
+
+//app.get('/', (req, res) => res.send('Hello World!'));
