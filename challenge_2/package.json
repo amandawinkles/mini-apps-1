@@ -11,12 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nodemon": "^2.0.4",
     "bluebird": "^3.7.2",
     "express": "^4.17.1",
-    "body-parser": "^1.19.0",
+    "express-json": "^1.0.0",
     "express-static": "^1.2.6",
-    "jquery": "^3.5.1"
+    "jquery": "^3.5.1",
+    "nodemon": "^2.0.4"
   },
   "devDependencies": {
     "chai": "^4.2.0",
