@@ -8,16 +8,121 @@
 
 //firstName,lastName,county,city,role,sales
 
-//loop through obj
+function jsonToCsvConverter(jsonReport) {
+  //firstName,lastName,county,city,role,sales
+  let csvColumnsArray = [];
+  //[Joshie,Wyattson,San Mateo,San Mateo,Broker,1000000]
+  let csvDataArray = [];
+  let finalString = '';
   //get keys, minus 'children' set to variable //Object.keys(obj)
-    //pop children off keys array
-    //join each key as is join() //this will be first row of csv report
-  //if type of obj[key] is a string or a num
-    //push into array
-    //join each element w/join() //make sure each is on a new line \n of csv report
-  //if type of obj === obj, but is not an array //if (!Array.isArray(obj))
-    //loop through obj (recurse)
-  //else if Array.isArray
-    //loop through array
-      //if type of obj === obj, but is not an array
-        //loop through obj (recurse)
+  let jsonKeysArr = Object.keys(jsonReport);
+  //pop children off keys array
+  jsonKeysArr.pop();
+  //join each key as is join()
+  let columnNames = jsonKeysArr.join();
+  //push string into csvArray //this will be first row of csv report
+  csvColumnsArray.push(columnNames);
+  let jsonValuesArr = Object.values(jsonReport);
+  //pop off last one again, since it's the children arr -> set to var so can loop through
+  let childrenArray = jsonValuesArr.pop();
+  //join each element w/join()
+  //let csvRow = jsonValuesArr.join();
+  csvDataArray.push(jsonValuesArr);
+
+  //have columns & all data except children in arrays
+  //recurse through childrenArray and store that data in csvDataArray
+  const convertReportData = function(childrenArray) {
+    //stop condition //when childrenArray is empty
+    if (childrenArray.length !== 0) {
+      //loop through childrenArray //or map?
+      for (let i = 0; i < childrenArray.length; i++) {
+        //if type of childrenArray[i] is an obj, but not an array //if (!Array.isArray(childrenArray[i]))
+        if ((typeof childrenArray[i] === 'object') && (!Array.isArray(childrenArray[i]))) {
+          //Object.values(childrenArray[i]) set to arr var
+          let childValuesArr = Object.values(childrenArray[i]);
+          //pop last value out of arr set to var to recurse
+          let childrensChildrenArray = childValuesArr.pop();
+          //join values arr into string
+          //childValuesArr.join();
+          csvDataArray.push(childValuesArr);
+          //recurse popped value/child arr
+          convertReportData(childrensChildrenArray);
+        }
+      }
+    }
+  };
+  //loop through csvDataArray //need to loop or just join?
+    //join each array element w/new line join('\n'), set to var for concat
+  //join csvColumnsArray, set to var for concat
+  //concatenate csvColumnsArray joined w/finalString
+  //concatenate csvDataArray joined w/finalString
+  //return final string w/new lines
+  return finalString;
+};
+
+
+
+
+
+
+// function jsonToCsvConverter(jsonReport) {
+//   //firstName,lastName,county,city,role,sales
+//   let csvColumnsArray = [];
+//   //Joshie,Wyattson,San Mateo,San Mateo,Broker,1000000
+//   let csvDataArray = [];
+//   //get keys, minus 'children' set to variable //Object.keys(obj)
+//   let jsonKeysArr = Object.keys(jsonReport);
+//   //pop children off keys array
+//   jsonKeysArr.pop();
+//   //join each key as is join()
+//   let columnNames = jsonKeysArr.join();
+//   //push string into csvArray //this will be first row of csv report
+//   csvColumnsArray.push(columnNames);
+//   let jsonValuesArr = Object.values(jsonReport);
+//   //pop off last one again, since it's the children arr -> set to var so can loop through
+//   let childrenArray = jsonValuesArr.pop();
+//   //join each element w/join()
+//   let csvRow = jsonValuesArr.join();
+//   csvDataArray.push(csvRow);
+
+//   //have columns & all data except children in arrays
+//   //recurse through childrenArray and store that data in csvDataArray
+//   const convertReportData = function(childrenArray) {
+//     //stop condition //when childrenArray is empty
+//     if (childrenArray.length !== 0) {
+//       //loop through childrenArray //or map?
+//       for (let i = 0; i < childrenArray.length; i++) {
+//         //if type of childrenArray[i] is an obj, but not an array //if (!Array.isArray(childrenArray[i]))
+//         if ((typeof childrenArray[i] === 'object') && (!Array.isArray(childrenArray[i]))) {
+//           //Object.values(childrenArray[i]) set to arr var
+//           let childValuesArr = Object.values(childrenArray[i]);
+//           //pop last value out of arr set to var to recurse
+//           childValuesArr.pop();
+//           //join values arr into string
+//           childValuesArr.join();
+//           //push string into csvDataArray w/new line
+//           //recurse popped value/child arr
+//         }
+//       }
+//     } else {
+//       return;
+//     }
+//   };
+//   //make sure each is on a new line \n of csv report //join('\n')
+//   //return final string w/new lines
+// };
+
+
+  //if childrenArray[i] is an array Array.isArray(childrenArray[i])
+        //recurse
+     //will need to concat array items while recursing if not pushing into csvDataArray
+    //let childValuesArr = [];
+    //else if type of childrenArray[i] is a string or a num
+        //push into arr
+      //join each element w/join() //make sure each is on a new line \n of csv report
+    //if type of obj === obj, but is not an array //if (!Array.isArray(obj))
+      //loop through obj (recurse)
+    //else if Array.isArray
+      //loop through array
+        //if type of obj === obj, but is not an array
+          //loop through obj (recurse)
