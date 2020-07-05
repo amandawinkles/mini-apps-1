@@ -1,6 +1,6 @@
-const jsonReport = require('./samples/sales_report');
+const jsonReport = require('../samples/sales_report');
 
-function jsonToCsvConverter(jsonReport) {
+module.exports = function jsonToCsvConverter(jsonReport) {
   //firstName,lastName,county,city,role,sales
   //[Joshie,Wyattson,San Mateo,San Mateo,Broker,1000000]
   let csvDataArray = [];
@@ -54,9 +54,6 @@ function jsonToCsvConverter(jsonReport) {
   //return final string w/new lines
   return finalString;
 };
-
-
-module.exports = jsonToCsvConverter;
 
 
 //Implement all the report generation logic on the server.

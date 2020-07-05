@@ -2,21 +2,19 @@
 <html>
   <head>
     <title>JSON to CSV Mini App</title>
-    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
     <div class="container">
       <h1 class="title">JSON --> CSV</h1>
-      <form action="http://localhost:3000/" id="send-JSON-form" method="post">
+      <form action="/jsonToCsv" id="send-JSON-form" method="post">
         <label for="json">JSON:</label>
         <textarea id="user-input" required></textarea>
         <input class="submit-button" type="submit" value="submit">
       </form>
     </div>
     <div>
-      <script src="client/app.js"></script>
-      <script src="server/server.js"></script>
-      <script src="server/index.js"></script>
+      <script src="app.js"></script>
     </div>
   </body>
 </html>
