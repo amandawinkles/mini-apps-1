@@ -8,8 +8,6 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-app.set('view engine', 'ejs');
-//app.use('/static', express.static('public'))
 app.use(express.static(path.join(__dirname, './client')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,12 +21,38 @@ app.post('/jsonToCsv', (req, res) => { //add endpoint for type converter file, t
   console.log('req.body', req.body);
   //JSON.parse() form data
   let parsedJson = JSON.parse(req.body);
-  //send data returned from type converter file passing in parsed form data
   let convertedData = jsonToCsvConverter(parsedJson);
-  res.send(convertedData);
+  let stringJson = JSON.stringify(parsedJson);
+  let templates = htmlTemplate(stringJson, convertedData);
+  res.send(templates);
   res.end();
 });
+
 //dynamically insert the result of the data processing step into the HTML of the response
+const htmlTemplate = function(incoming, converted) {
+  return `
+  <!DOCTYPE html>
+<html>
+  <head>
+    <title>JSON to CSV Mini App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">JSON --> CSV</h1>
+      <form action="/jsonToCsv" id="send-JSON-form" method="post">
+        <label for="json">JSON:</label>
+        <textarea id="user-input" required></textarea>
+        <input class="submit-button" type="submit" value="submit">
+      </form>
+    </div>
+    <div>
+      <script src="app.js"></script>
+    </div>
+  </body>
+</html>
+  `};
+
 
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`));
@@ -37,15 +61,14 @@ module.exports = app;
 
 //app.get('/', (req, res) => res.send('Hello World!'));
 
-// app.post('/jsonToCsv', (req, res, next) => { //add endpoint for type converter file, then add that same endpoint to html form action
+// app.post('/jsonToCsv', (req, res) => { //add endpoint for type converter file, then add that same endpoint to html form action
 //   console.log('req.body', req.body);
-//   //JSON.parse()
+//   //JSON.parse() form data
 //   let parsedJson = JSON.parse(req.body);
-//   //send data returned from type converter file passing in parsed req.body
+//   //send data returned from type converter file passing in parsed form data
 //   let convertedData = jsonToCsvConverter(parsedJson);
 //   res.send(convertedData);
 //   res.end();
-//   next();
 // });
 
 // app.get('/', (req, res, next) => {
@@ -53,3 +76,7 @@ module.exports = app;
 //   res.sendFile('/jsonToCsv');
 //   res.end();
 // });
+
+//let html = ejs.render();
+//app.set('view engine', 'ejs');
+//app.use('/static', express.static('public'))

@@ -2,6 +2,8 @@
 //The form submission process should use the default browser action/behavior. DO NOT use jQuery/AJAX functions in the submission process.
 //When the user clicks submit, POST the form data to the server using a get operation with the serialized form data
 
+//const jsonToCsv = require('../model/jsonToCsv');
+
 //add event listener to form for submit click--> get json data
 const form = document.getElementById('send-JSON-form');
 const userInput = document.getElementById('user-input');
@@ -11,33 +13,8 @@ form.addEventListener("submit", function(e) {
   e.preventDefault();
   let jsonInput = userInput.value;
   //send jsonInput to type converter file
-    //from type conversion, post to server
+  let url = 'http://localhost:3000/jsonToCsv';
 });
-
-// function getJsonData(event) {
-//   event.preventDefault();
-//   //get json data .value
-//   const input = document.getElementById('user-input');
-//   //send json data w/post func
-//   //sendJsonData(input);
-// };
-
-//post func called with form data
-// function sendJsonData(input) {
-//   console.log('input from client', input);
-//   //input = document.getElementById('user-input');
-//   //POST
-//   let response = fetch('http://127.0.0.1:5501/challenge_2/client/index.html', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'text/plain'
-//     },
-//     data: input
-//   });
-// };
-
-//'Content-Type': 'application/json;charset=utf-8'
-//body: JSON.stringify(input);
 
 
 
