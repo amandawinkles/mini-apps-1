@@ -13,7 +13,8 @@ form.addEventListener("submit", function(e) {
   e.preventDefault();
   let jsonInput = userInput.value;
   //send jsonInput to type converter file
-  let url = 'http://localhost:3000/jsonToCsv';
+  jsonToCsvConverter(jsonInput);
+  //let url = 'http://localhost:3000/jsonToCsv';
 });
 
 
