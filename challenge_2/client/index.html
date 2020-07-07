@@ -8,8 +8,14 @@
     <div class="container">
       <h1 class="title">JSON --> CSV</h1>
       <form action="/jsonToCsv" id="send-JSON-form" method="post">
-        <label for="json">JSON:</label>
-        <textarea id="user-input" required></textarea>
+        <p style="padding: 2em 0 4em 0;">
+          <label for="json">Upload JSON File:</label>
+          <textarea id="user-input" required></textarea>
+        </p>
+        <p style="padding: 0 0 1em 0">
+          <label for="file-selection">Choose JSON File:</label>
+          <input type="file" id="json-file" accept=".json"></input>
+        </p>
         <input class="submit-button" type="submit" value="submit">
       </form>
     </div>

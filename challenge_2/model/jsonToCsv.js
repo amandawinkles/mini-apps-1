@@ -1,6 +1,4 @@
 const jsonReport = require('../samples/sales_report');
-const submitForm = require('..client/app');
-const app = require('.server');
 
 module.exports = function jsonToCsvConverter(jsonReport) {
   //firstName,lastName,county,city,role,sales
