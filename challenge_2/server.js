@@ -5,6 +5,10 @@ const bodyParser = require('body-parser');
 const static = require('express-static');
 const jsonToCsv = require('./model/jsonToCsv');
 const path = require('path');
+const multer  = require('multer');
+const upload = multer({ dest: 'uploads/' });
+//const fileReader = require('./client/app');
+const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -17,8 +21,9 @@ app.get('/', (req, res) => res.render('index'));
 
 //POST the form data to the server using a get operation with the serialized form data
 //parse json in post request
-app.post('/jsonToCsv', (req, res) => { //add endpoint for type converter file, then add that same endpoint to html form action
-  console.log('req.body', req.body);
+app.post('/jsonToCsv', (req, res, next) => {
+  // console.log('req.file', req.file);
+  // console.log('req.body', req.body);
   //JSON.parse() form data
   let parsedJson = JSON.parse(req.body);
   let convertedData = jsonToCsvConverter(parsedJson);
@@ -26,8 +31,23 @@ app.post('/jsonToCsv', (req, res) => { //add endpoint for type converter file, t
   let templates = htmlTemplate(stringJson, convertedData);
   res.send(templates);
   res.end();
+  next();
 });
 
+app.post('/', (req, res, next) => {
+  console.log('req.file', req.file);
+  console.log('req.body', req.body);
+  //fileContents from fileReader
+  let fileName = req.file.fileName;
+  res.render(fileName);
+});
+
+
+// app.post('/upload', upload.single('json-upload'), (req, res, next) => {
+//   console.log('req.file', req.file);
+//   let fileName = req.file.fileName;
+//   //readFile //call fileReader?
+// });
 //dynamically insert the result of the data processing step into the HTML of the response
 const htmlTemplate = function(incoming, converted) {
   return `
@@ -58,6 +78,14 @@ const htmlTemplate = function(incoming, converted) {
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`));
 
 module.exports = app;
+
+//send html to templating file with pug/ejs
+//render csv object .render(), 202 status
+
+
+//put script in html
+//add download link on html, so file not going to browser, but sending link
+
 
 //app.get('/', (req, res) => res.send('Hello World!'));
 
