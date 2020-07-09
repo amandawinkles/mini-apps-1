@@ -4,18 +4,18 @@
 
 //const jsonToCsv = require('../model/jsonToCsv');
 
-//console.log('jsonToCsv func', jsonToCsv);
-
 //add event listener to form for submit click--> get json data
 const form = document.getElementById('send-JSON-form');
 //const userInput = document.getElementById('user-input');
 const fileUploadData = document.getElementById('json-file');
-let url = 'http://localhost:3000/jsonToCsv';
+// let url = 'http://localhost:3000/jsonToCsv';
 
 $(document).ready(function() {
   $(form).on('submit', fileReader);
 });
 
+//read file as obj, send to server w/ajax
+//server-side, convert to csv, render
 function fileReader(event) {
   event.preventDefault();
   let selectedFile = fileUploadData.files[0];
@@ -24,9 +24,10 @@ function fileReader(event) {
 
   reader.onload = function(event) {
     let fileContents = reader.result;
-    //convert to string, then pass in here:
-    //call jsonToCsv(fileContents)
+    console.log('fileContents upon load', fileContents);
     $('#result-area').val(fileContents);
+    //send file contents to server
+    sendFile(fileContents);
   };
 
   //fire onload event
@@ -36,9 +37,9 @@ function fileReader(event) {
 const sendFile = function(file) {
   $.ajax({
     type: 'POST',
-    url: url,
+    url: '/',
     data: file,
-    dataType: 'html',
+    // dataType: 'html',
     // cache: false,
     contentType: 'application/json',
     success: (data) => {
@@ -50,26 +51,75 @@ const sendFile = function(file) {
   });
 };
 
-//send this middleware to server
+
+// function jsonToCsvConverter(fileContents) {
+//   //firstName,lastName,county,city,role,sales
+//   //[Joshie,Wyattson,San Mateo,San Mateo,Broker,1000000]
+//   let csvDataArray = [];
+//   let finalString = '';
+//   //get keys, minus 'children' set to variable //Object.keys(obj)
+//   let jsonKeysArr = Object.keys(fileContents);
+//   //pop children off keys array
+//   jsonKeysArr.pop();
+//   //join each key as is join()
+//   //firstName,lastName,county,city,role,sales
+//   let columnNames = jsonKeysArr.join();
+//   //push string into csvArray //this will be first row of csv report
+//   //csvColumnsArray.push(columnNames);
+//   let jsonValuesArr = Object.values(fileContents);
+//   //pop off last one again, since it's the children arr -> set to var so can loop through
+//   let childrenArray = jsonValuesArr.pop();
+//   csvDataArray.push(jsonValuesArr);
+
+//   //have columns & data except children in arrays
+//   //recurse through childrenArray and store that data in csvDataArray
+//   const convertReportData = function(childrenArray) {
+//     //stop condition //when childrenArray is empty
+//     if (childrenArray.length !== 0) {
+//       //loop through childrenArray
+//       for (let i = 0; i < childrenArray.length; i++) {
+//         //if type of childrenArray[i] is an obj, but not an array //if (!Array.isArray(childrenArray[i]))
+//         if ((typeof childrenArray[i] === 'object') && (!Array.isArray(childrenArray[i]))) {
+//           //Object.values(childrenArray[i]) set to arr var
+//           let childValuesArr = Object.values(childrenArray[i]);
+//           //pop last value out of arr set to var to recurse
+//           let childrensChildrenArray = childValuesArr.pop();
+//           //join values arr into string
+//           //childValuesArr.join();
+//           csvDataArray.push(childValuesArr);
+//           //recurse popped value/child arr
+//           convertReportData(childrensChildrenArray);
+//         }
+//       }
+//     } else {
+//       return;
+//     }
+//   };
+//   convertReportData(childrenArray);
+
+//   let dataStrings = '';
+//   dataStrings += csvDataArray.join('\n');
+//   //concatenate csvColumnsArray joined w/finalString
+//   finalString += columnNames + '\n';
+//   //concatenate csvDataArray joined w/finalString
+//   finalString += dataStrings;
+//   //return final string w/new lines
+//   return finalString;
+// };
+
 
 //module.exports = { sendFile, fileReader };
 
-//form, fileUploadData
-
 //send in readable format- string
-//not sending data from inside file to server, only sending file, not data from inside
 //browser will read data from file, then send to server
 //use fileReader on client side
 //store as var while reading
 //use multer to reconstruct file?
 //will save work inside server
 //file picker- read file- convert to json- send json contents to server
+//send this middleware to server
 
 
-
-
-
-// const jsonToCsv = require('../model/jsonToCsv');
 
 // //add event listener to form for submit click--> get json data
 // const form = document.getElementById('send-JSON-form');
@@ -132,7 +182,52 @@ const sendFile = function(file) {
 //   sendFile(result);
 // });
 
+// function fileReader(event) {
+//   event.preventDefault();
+//   let selectedFile = fileUploadData.files[0];
+//   //console.log('selectedFile', selectedFile);
+//   let convertedToCsv;
+//   let reader = new FileReader();
 
+//   reader.onload = function(event) {
+//     let fileContents = reader.result;
+//     console.log('fileContents upon load', fileContents);
+//     //convert to string
+//     convertedToCsv = jsonToCsvConverter(fileContents);
+//     console.log('converted ---> csv', convertedToCsv);
+//     $('#result-area').val(convertedToCsv);
+//   };
+
+//   //fire onload event
+//   reader.readAsText(selectedFile);
+//   //send file contents to server
+//   sendFile(convertedToCsv);
+// };
+
+// const sendFile = function(file) {
+//   $.ajax({
+//     type: 'POST',
+//     url: url,
+//     data: file,
+//     dataType: 'html',
+//     // cache: false,
+//     contentType: 'application/json',
+//     success: (data) => {
+//       console.log('upload successful', data);
+//     },
+//     error: (err) => {
+//       console.log('error uploading file', err);
+//     }
+//   });
+// };
+
+
+// firstName,lastName,county,city,role,sales
+// Joshie,Wyattson,San Mateo,San Mateo,Broker,1000000
+// Beth Jr.,Johnson,San Mateo,Pacifica,Manager,2900000
+// Smitty,Won,San Mateo,Redwood City,Sales Person,4800000
+// Allen,Price,San Mateo,Burlingame,Sales Person,2500000
+// Beth,Johnson,San Francisco,San Francisco,Broker/Sales Person,7500000
 
 
 

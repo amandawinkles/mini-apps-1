@@ -5,16 +5,18 @@ const bodyParser = require('body-parser');
 const static = require('express-static');
 const jsonToCsv = require('./model/jsonToCsv');
 const path = require('path');
-const multer  = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const ejs = require('ejs');
+// const multer  = require('multer');
+// const upload = multer({ dest: 'uploads/' });
 //const fileReader = require('./client/app');
-const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, './client')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.set('view engine', 'ejs');
 
 //Use Express to serve up an index.html file and its associated assets
 app.get('/', (req, res) => res.render('index'));
@@ -35,11 +37,15 @@ app.post('/jsonToCsv', (req, res, next) => {
 });
 
 app.post('/', (req, res, next) => {
-  console.log('req.file', req.file);
+  console.log('req.file', req.file); //undefined
   console.log('req.body', req.body);
   //fileContents from fileReader
-  let fileName = req.file.fileName;
-  res.render(fileName);
+  //let fileName = req.file.fileName;
+  //res.render(fileName);
+  let incomingJson = req.body;
+  let convertedData = jsonToCsv(incomingJson);
+  //let html = ejs.render();
+  res.render('index', { convertedData });
 });
 
 
@@ -48,6 +54,7 @@ app.post('/', (req, res, next) => {
 //   let fileName = req.file.fileName;
 //   //readFile //call fileReader?
 // });
+
 //dynamically insert the result of the data processing step into the HTML of the response
 const htmlTemplate = function(incoming, converted) {
   return `
@@ -105,6 +112,5 @@ module.exports = app;
 //   res.end();
 // });
 
-//let html = ejs.render();
-//app.set('view engine', 'ejs');
+
 //app.use('/static', express.static('public'))

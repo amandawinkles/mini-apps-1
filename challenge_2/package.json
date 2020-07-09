@@ -1,15 +1,15 @@
 {
   "name": "challenge_2",
   "version": "1.0.0",
-  "description": "",
+  "description": "JSON to CSV Converter",
   "main": "server.js",
   "browser": "client/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon --ignore node_modules server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Amanda",
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.7.2",
