@@ -37,15 +37,14 @@ app.post('/jsonToCsv', (req, res, next) => {
 });
 
 app.post('/', (req, res, next) => {
-  console.log('req.file', req.file); //undefined
-  console.log('req.body', req.body);
-  //fileContents from fileReader
-  //let fileName = req.file.fileName;
-  //res.render(fileName);
+  //console.log('req.file', req.file); //undefined
+  //console.log('req.body', req.body);
   let incomingJson = req.body;
   let convertedData = jsonToCsv(incomingJson);
+  let stringCsv = JSON.stringify(convertedData);
   //let html = ejs.render();
-  res.render('index', { convertedData });
+  //res.send('index', { convertedData });
+  res.status(200).send(stringCsv);
 });
 
 
