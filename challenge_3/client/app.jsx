@@ -9,17 +9,15 @@ class Homepage extends React.Component {
     this.state = {movingToF1: false};
     this.handleCheckoutClick = this.handleCheckoutClick.bind(this);
   }
-
   handleCheckoutClick(e) {
     e.preventDefault();
     this.setState({movingToF1: true});
   }
-
   render() {
     return (
-      <div>
-        <button onClick={props.onClick}>
-         Checkout
+      <div class="container">
+        <button onClick={this.handleCheckoutClick}>
+          Checkout
         </button>
       </div>
     );
@@ -27,12 +25,128 @@ class Homepage extends React.Component {
 }
 
 //F1 class component
-  //render F1
+  //render F1: name, email, and password for account creation
   //render NextButton
+class F1 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      email: '',
+      password: '',
+      accountCreated: false
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleNextClick = this.handleNextClick.bind(this);
+  }
+  handleInputChange(e) {
+    e.preventDefault();
+    this.setState({
+      name: e.target.value,
+      email: e.target.value,
+      password: e.target.value
+    });
+  }
+  handleNextClick(e) {
+    e.preventDefault();
+    this.setState({accountCreated: true});
+  }
+  render() {
+    return (
+      <div class="container">
+        <h1 class="title">Create Your Account</h1>
+        <form>
+          <p style="padding: 2em 0 .5em 0">
+            <label for="account-name">Name:</label>
+            <input type="text" id="name"></input>
+          </p>
+          <p style="padding: .5em 0 .5em 0">
+            <label for="account-email">Email:</label>
+            <input type="text" id="email"></input>
+          </p>
+          <p style="padding: .5em 0 2em 0">
+            <label for="account-password">Password:</label>
+            <input type="text" id="password"></input>
+          </p>
+        </form>
+        <button onClick={this.handleNextClick}>
+          Next
+        </button>
+      </div>
+    );
+  }
+}
 
 //F2 class component
-  //render F2
+  //render F2: ship to address (line 1, line 2, city, state, zip code) and phone number
   //render NextButton
+  class F2 extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        zip: 00000,
+        phone: 0000000000,
+        contactInfoAdded: false
+      };
+      this.handleInputChange = this.handleInputChange.bind(this);
+      this.handleNextClick = this.handleNextClick.bind(this);
+    }
+    handleInputChange(e) {
+      e.preventDefault();
+      this.setState({
+        address1: e.target.value,
+        address2: e.target.value,
+        city: e.target.value,
+        state: e.target.value,
+        zip: e.target.value,
+        phone: e.target.value
+      });
+    }
+    handleNextClick(e) {
+      e.preventDefault();
+      this.setState({contactInfoAdded: true});
+    }
+    render() {
+      return (
+        <div class="container">
+          <h1 class="title">Enter Contact Information</h1>
+          <form>
+            <p style="padding: 2em 0 .5em 0">
+              <label for="contact-address1">Address (Line 1):</label>
+              <input type="text" id="address-1"></input>
+            </p>
+            <p style="padding: .5em 0 .5em 0">
+              <label for="contact-address2">Address (Line 2):</label>
+              <input type="text" id="address-2"></input>
+            </p>
+            <p style="padding: .5em 0 .5em 0">
+              <label for="contact-city">City:</label>
+              <input type="text" id="city"></input>
+            </p>
+            <p style="padding: .5em 0 .5em 0">
+              <label for="contact-state">State (Abbr.):</label>
+              <input type="text" id="state-abbr" maxlength="2"></input>
+            </p>
+            <p style="padding: .5em 0 .5em 0">
+              <label for="contact-zip">Zip Code:</label>
+              <input type="number" id="zip-code" maxlength="5"></input>
+            </p>
+            <p style="padding: .5em 0 2em 0">
+              <label for="contact-phone">Phone Number:</label>
+              <input type="number" id="phone-number" maxlength="10"></input>
+            </p>
+          </form>
+          <button onClick={this.handleNextClick}>
+            Next
+          </button>
+        </div>
+      );
+    }
+  }
 
 //F3 class component
   //render F3
@@ -42,11 +156,13 @@ class Homepage extends React.Component {
   //render Page4
   //render PurchaseButton
 
-ReactDOM.render(<Homepage />, document.getElementById('app'));
+  ReactDOM.render(<Homepage />, document.getElementById('app'));
 
 //Link your transpiled component file from index.html
 
 //when Checkout button clicked, takes the user to the first of several forms -> F1, F2, F3, (Page4)
+
+//toggle next component to render
 
 
 
@@ -71,5 +187,53 @@ ReactDOM.render(<Homepage />, document.getElementById('app'));
 
 
 //<button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
+
+// class Checkout extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       movingToF1: false,
+//       movingToNext: false,
+//       movingtoHomepage: false
+//     };
+//     this.handleCheckoutClick = this.handleCheckoutClick.bind(this);
+//     this.handleNextClick = this.handleNextClick.bind(this);
+//     this.handlePurchaseClick = this.handlePurchaseClick.bind(this);
+//   }
+
+//   handleCheckoutClick() {
+//     this.setState({movingToF1: true});
+//   }
+
+//   handleNextClick() {
+//     this.setState({movingToNext: true});
+//   }
+
+//   handlePurchaseClick() {
+//     this.setState({movingtoHomepage: true});
+//   }
+
+//   render() {
+//     const movingToF1 = this.state.movingToF1;
+//     const movingToNext = this.state.movingToNext;
+//     const movingtoHomepage = this.state.movingtoHomepage;
+//     let button;
+//     if (movingToF1) {
+//       button = <NextButton onClick={this.handleNextClick} />;
+//       //if (movingToNext && !on Page4)
+//     } else if (movingToNext) {
+//       button = <NextButton onClick={this.handleNextClick} />;
+//       //if (movingToNext && on Page4)
+//     } else if () {
+//       button = <PurchaseButton onClick={this.handlePurchaseClick} />;
+//     } else if (movingtoHomepage) {
+//       button = <CheckoutButton onClick={this.handleCheckoutClick} />;
+//     }
+
+//     return (
+
+//     );
+//   }
+// }
 
 

@@ -34,6 +34,7 @@ CREATE TABLE `contactInfo` (
   `city` VARCHAR(255),
   `state` VARCHAR(2),
   `zip` INTEGER(5),
+  `phone` INTEGER(10),
   PRIMARY KEY (`id`)
 );
 
