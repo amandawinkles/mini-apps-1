@@ -5,12 +5,12 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel . --out-dir public --ignore=node_modules,compiled --source-maps inline --watch client server.js"
+    "start": "nodemon server.js",
+    "start:watch": "babel --out-dir public --presets react-app/prod --source-maps inline --watch client"
   },
   "author": "Amanda",
   "license": "ISC",
   "dependencies": {
-    "@babel/polyfill": "^7.10.4",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
     "react": "^16.13.1",
