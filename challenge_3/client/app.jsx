@@ -1,6 +1,9 @@
 //components = Checkout, F1, F2, F3, Page4
 //store data in db for each checkout experience
 
+//url for posting to db w/route
+const url = 'http://localhost/4568';
+
 //Homepage class component /homepage
   //render CheckoutButton
 class Homepage extends React.Component {
@@ -50,6 +53,7 @@ class F1 extends React.Component {
   handleNextClick(e) {
     e.preventDefault();
     this.setState({accountCreated: true});
+    //store data from F1 in db
   }
   render() {
     return (
@@ -58,15 +62,15 @@ class F1 extends React.Component {
         <form>
           <p style="padding: 2em 0 .5em 0">
             <label for="account-name">Name:</label>
-            <input type="text" id="name"></input>
+            <input type="text" id="name" value={this.state.name} onChange={this.handleInputChange} required></input>
           </p>
           <p style="padding: .5em 0 .5em 0">
             <label for="account-email">Email:</label>
-            <input type="text" id="email"></input>
+            <input type="email" id="email" value={this.state.email} onChange={this.handleInputChange} required></input>
           </p>
           <p style="padding: .5em 0 2em 0">
             <label for="account-password">Password:</label>
-            <input type="text" id="password"></input>
+            <input type="password" id="pw" value={this.state.password} onChange={this.handleInputChange} required></input>
           </p>
         </form>
         <button onClick={this.handleNextClick}>
@@ -80,89 +84,180 @@ class F1 extends React.Component {
 //F2 class component
   //render F2: ship to address (line 1, line 2, city, state, zip code) and phone number
   //render NextButton
-  class F2 extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        address1: '',
-        address2: '',
-        city: '',
-        state: '',
-        zip: 00000,
-        phone: 0000000000,
-        contactInfoAdded: false
-      };
-      this.handleInputChange = this.handleInputChange.bind(this);
-      this.handleNextClick = this.handleNextClick.bind(this);
-    }
-    handleInputChange(e) {
-      e.preventDefault();
-      this.setState({
-        address1: e.target.value,
-        address2: e.target.value,
-        city: e.target.value,
-        state: e.target.value,
-        zip: e.target.value,
-        phone: e.target.value
-      });
-    }
-    handleNextClick(e) {
-      e.preventDefault();
-      this.setState({contactInfoAdded: true});
-    }
-    render() {
-      return (
-        <div class="container">
-          <h1 class="title">Enter Contact Information</h1>
-          <form>
-            <p style="padding: 2em 0 .5em 0">
-              <label for="contact-address1">Address (Line 1):</label>
-              <input type="text" id="address-1"></input>
-            </p>
-            <p style="padding: .5em 0 .5em 0">
-              <label for="contact-address2">Address (Line 2):</label>
-              <input type="text" id="address-2"></input>
-            </p>
-            <p style="padding: .5em 0 .5em 0">
-              <label for="contact-city">City:</label>
-              <input type="text" id="city"></input>
-            </p>
-            <p style="padding: .5em 0 .5em 0">
-              <label for="contact-state">State (Abbr.):</label>
-              <input type="text" id="state-abbr" maxlength="2"></input>
-            </p>
-            <p style="padding: .5em 0 .5em 0">
-              <label for="contact-zip">Zip Code:</label>
-              <input type="number" id="zip-code" maxlength="5"></input>
-            </p>
-            <p style="padding: .5em 0 2em 0">
-              <label for="contact-phone">Phone Number:</label>
-              <input type="number" id="phone-number" maxlength="10"></input>
-            </p>
-          </form>
-          <button onClick={this.handleNextClick}>
-            Next
-          </button>
-        </div>
-      );
-    }
+class F2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      zip: 00000,
+      phone: 0000000000,
+      contactInfoAdded: false
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleNextClick = this.handleNextClick.bind(this);
   }
+  handleInputChange(e) {
+    e.preventDefault();
+    this.setState({
+      address1: e.target.value,
+      address2: e.target.value,
+      city: e.target.value,
+      stateAbbr: e.target.value,
+      zip: e.target.value,
+      phone: e.target.value
+    });
+  }
+  handleNextClick(e) {
+    e.preventDefault();
+    this.setState({contactInfoAdded: true});
+    //store data from F2 in db
+  }
+  render() {
+    return (
+      <div class="container">
+        <h1 class="title">Enter Contact Information</h1>
+        <form>
+          <p style="padding: 2em 0 .5em 0">
+            <label for="contact-address1">Address (Line 1):</label>
+            <input type="text" id="address-1" value={this.state.address1} onChange={this.handleInputChange} required></input>
+          </p>
+          <p style="padding: .5em 0 .5em 0">
+            <label for="contact-address2">Address (Line 2):</label>
+            <input type="text" id="address-2" value={this.state.address2} onChange={this.handleInputChange} required></input>
+          </p>
+          <p style="padding: .5em 0 .5em 0">
+            <label for="contact-city">City:</label>
+            <input type="text" id="city" value={this.state.city} onChange={this.handleInputChange} required></input>
+          </p>
+          <p style="padding: .5em 0 .5em 0">
+            <label for="contact-state">State (Abbr.):</label>
+            <input type="text" id="state-abbr" value={this.state.stateAbbr} maxlength="2" onChange={this.handleInputChange} required></input>
+          </p>
+          <p style="padding: .5em 0 .5em 0">
+            <label for="contact-zip">Zip Code:</label>
+            <input type="number" id="zip-code" value={this.state.zip} maxlength="5" onChange={this.handleInputChange} required></input>
+          </p>
+          <p style="padding: .5em 0 2em 0">
+            <label for="contact-phone">Phone Number:</label>
+            <input type="tel" id="phone-number" value={this.state.phone} maxlength="10" onChange={this.handleInputChange} required></input>
+          </p>
+        </form>
+        <button onClick={this.handleNextClick}>
+          Next
+        </button>
+      </div>
+    );
+  }
+}
 
 //F3 class component
-  //render F3
+  //render F3: credit card #, expiry date, CVV, and billing zip code
   //render NextButton
+class F3 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      card: 0,
+      expiration: '',
+      ccv: 0,
+      zip: 00000,
+      cardInfoAdded: false
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleNextClick = this.handleNextClick.bind(this);
+  }
+  handleInputChange(e) {
+    e.preventDefault();
+    this.setState({
+      card: e.target.value,
+      expiration: e.target.value,
+      ccv: e.target.value,
+      zip: e.target.value
+    });
+  }
+  handleNextClick(e) {
+    e.preventDefault();
+    this.setState({cardInfoAdded: true});
+    //store data from F3 in db
+  }
+  render() {
+    return (
+      <div class="container">
+        <h1 class="title">Enter Credit Card Information</h1>
+        <form>
+          <p style="padding: 2em 0 .5em 0">
+            <label for="card-number">Credit Card #:</label>
+            <input type="number" id="card-num" value={this.state.card} onChange={this.handleInputChange} required></input>
+          </p>
+          <p style="padding: .5em 0 .5em 0">
+            <label for="card-expiration">Expiration Date:</label>
+            <input type="date" id="exp" value={this.state.expiration} onChange={this.handleInputChange} required></input>
+          </p>
+          <p style="padding: .5em 0 .5em 0">
+            <label for="card-ccv">CCV:</label>
+            <input type="number" id="ccv" value={this.state.ccv} onChange={this.handleInputChange} required></input>
+          </p>
+          <p style="padding: .5em 0 .5em 0">
+            <label for="card-zip">Zip Code:</label>
+            <input type="number" id="card-zip" value={this.state.zip} maxlength="5" onChange={this.handleInputChange} required></input>
+          </p>
+        </form>
+        <button onClick={this.handleNextClick}>
+          Next
+        </button>
+      </div>
+    );
+  }
+}
 
 //Page4 class component
-  //render Page4
+  //render Page4: confirmation page which summarizes the data
   //render PurchaseButton
+class Page4 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {finishedConfirmation: false};
+    this.handlePurchaseClick = this.handlePurchaseClick.bind(this);
+  }
+  handlePurchaseClick(e) {
+    e.preventDefault();
+    this.setState({finishedConfirmation: true});
+    //store data from Page4 in db
+  }
+  render() {
+    return (
+      <div class="container">
+        <h1 class="title">Confirmation</h1>
+        <form>
+          <h3 style="padding: 2em 0 .5em 0">Click the Purchase Button to Complete Your Transaction</h3>
+          <table id="confirmation">
+            <tbody>
+              <tr>
+                <td>Name:</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    );
+  }
+}
 
-  ReactDOM.render(<Homepage />, document.getElementById('app'));
+ReactDOM.render(<Checkout />, document.getElementById('app'));
 
 //Link your transpiled component file from index.html
 
 //when Checkout button clicked, takes the user to the first of several forms -> F1, F2, F3, (Page4)
 
 //toggle next component to render
+
+//<F1 fields={[name, email, password]} />
+
+
 
 
 
@@ -182,8 +277,6 @@ class F1 extends React.Component {
 //     </button>
 //   );
 // }
-
-//const url = 'http://localhost/4568';
 
 
 //<button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
@@ -236,4 +329,48 @@ class F1 extends React.Component {
 //   }
 // }
 
+//Page4 class component
+  //render Page4: confirmation page which summarizes the data
+  //render PurchaseButton
+  // class Page4 extends React.Component {
+  //   constructor(props) {
+  //     super(props);
+  //     this.state = {finishedConfirmation: false};
+  //     this.handlePurchaseClick = this.handlePurchaseClick.bind(this);
+  //   }
+  //   handlePurchaseClick(e) {
+  //     e.preventDefault();
+  //     this.setState({finishedConfirmation: true});
+  //     //store data from Page4 in db
+  //   }
+  //   render() {
+  //     return (
+  //       <div class="container">
+  //         <h1 class="title">Confirmation</h1>
+  //         <form>
+  //           <h3 style="padding: 2em 0 .5em 0">Click the Purchase Button to Complete Your Transaction</h3>
+  //           <table id="confirmation">
+  //             <tbody>
+  //               <tr>
+  //                 <td>Name:</td>
+  //                 <td>{this.props.name}</td>
+  //               </tr>
+  //             </tbody>
+  //           </table>
+  //         </form>
+  //       </div>
+  //     );
+  //   }
+  // }
 
+
+  // class Checkout extends React.Component {
+  //   render() {
+  //     return (
+  //       <div className="App">
+  //         <Page4  />
+
+  //       </div>
+  //     );
+  //   }
+  // }
