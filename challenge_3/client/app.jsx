@@ -92,8 +92,8 @@ class F2 extends React.Component {
       address2: '',
       city: '',
       state: '',
-      zip: 00000,
-      phone: 0000000000,
+      zip: 0,
+      phone: 0,
       contactInfoAdded: false
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -163,7 +163,7 @@ class F3 extends React.Component {
       card: 0,
       expiration: '',
       ccv: 0,
-      zip: 00000,
+      cardZip: 0,
       cardInfoAdded: false
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -175,7 +175,7 @@ class F3 extends React.Component {
       card: e.target.value,
       expiration: e.target.value,
       ccv: e.target.value,
-      zip: e.target.value
+      cardZip: e.target.value
     });
   }
   handleNextClick(e) {
@@ -201,8 +201,8 @@ class F3 extends React.Component {
             <input type="number" id="ccv" value={this.state.ccv} onChange={this.handleInputChange} required></input>
           </p>
           <p style="padding: .5em 0 .5em 0">
-            <label for="card-zip">Zip Code:</label>
-            <input type="number" id="card-zip" value={this.state.zip} maxlength="5" onChange={this.handleInputChange} required></input>
+            <label for="card-zip">Billing Zip Code:</label>
+            <input type="number" id="card-zip" value={this.state.cardZip} maxlength="5" onChange={this.handleInputChange} required></input>
           </p>
         </form>
         <button onClick={this.handleNextClick}>
@@ -213,41 +213,72 @@ class F3 extends React.Component {
   }
 }
 
+function PurchaseButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Purchase
+    </button>
+  );
+}
+
 //Page4 class component
   //render Page4: confirmation page which summarizes the data
   //render PurchaseButton
-class Page4 extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {finishedConfirmation: false};
-    this.handlePurchaseClick = this.handlePurchaseClick.bind(this);
-  }
-  handlePurchaseClick(e) {
-    e.preventDefault();
-    this.setState({finishedConfirmation: true});
-    //store data from Page4 in db
-  }
-  render() {
-    return (
-      <div class="container">
-        <h1 class="title">Confirmation</h1>
-        <form>
-          <h3 style="padding: 2em 0 .5em 0">Click the Purchase Button to Complete Your Transaction</h3>
-          <table id="confirmation">
-            <tbody>
-              <tr>
-                <td>Name:</td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
+function Page4(name, email, address1, address2, city, state, zip, phone, card, expiration, ccv, cardZip, handlePurchaseClick) {
+  return (
+    <div class="container">
+      <h1 class="title">Confirmation</h1>
+      <form>
+        <h3 style="padding: 2em 0 .5em 0">Click the Purchase Button to Complete Your Transaction</h3>
+        <table id="confirmation">
+          <tbody>
+            <tr>
+              <td>Name: {name}</td>
+            </tr>
+            <tr>
+              <td>Email: {email}</td>
+            </tr>
+            <tr>
+              <td>Address (Line 1): {address1}</td>
+            </tr>
+            <tr>
+              <td>Address (Line 2): {address2}</td>
+            </tr>
+            <tr>
+              <td>City: {city}</td>
+            </tr>
+            <tr>
+              <td>State: {state}</td>
+            </tr>
+            <tr>
+              <td>Zip Code: {zip}</td>
+            </tr>
+            <tr>
+              <td>Phone Number: {phone}</td>
+            </tr>
+            <tr>
+              <td>Card Number: {card}</td>
+            </tr>
+            <tr>
+              <td>Expiration Date: {expiration}</td>
+            </tr>
+            <tr>
+              <td>CCV: {ccv}</td>
+            </tr>
+            <tr>
+              <td>Billing Zip Code: {cardZip}</td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      <div>
+        <PurchaseButton onClick={handlePurchaseClick} />;
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-ReactDOM.render(<Checkout />, document.getElementById('app'));
+ReactDOM.render(<Homepage />, document.getElementById('app'));
 
 //Link your transpiled component file from index.html
 
@@ -256,8 +287,6 @@ ReactDOM.render(<Checkout />, document.getElementById('app'));
 //toggle next component to render
 
 //<F1 fields={[name, email, password]} />
-
-
 
 
 
@@ -329,39 +358,37 @@ ReactDOM.render(<Checkout />, document.getElementById('app'));
 //   }
 // }
 
-//Page4 class component
-  //render Page4: confirmation page which summarizes the data
-  //render PurchaseButton
-  // class Page4 extends React.Component {
-  //   constructor(props) {
-  //     super(props);
-  //     this.state = {finishedConfirmation: false};
-  //     this.handlePurchaseClick = this.handlePurchaseClick.bind(this);
-  //   }
-  //   handlePurchaseClick(e) {
-  //     e.preventDefault();
-  //     this.setState({finishedConfirmation: true});
-  //     //store data from Page4 in db
-  //   }
-  //   render() {
-  //     return (
-  //       <div class="container">
-  //         <h1 class="title">Confirmation</h1>
-  //         <form>
-  //           <h3 style="padding: 2em 0 .5em 0">Click the Purchase Button to Complete Your Transaction</h3>
-  //           <table id="confirmation">
-  //             <tbody>
-  //               <tr>
-  //                 <td>Name:</td>
-  //                 <td>{this.props.name}</td>
-  //               </tr>
-  //             </tbody>
-  //           </table>
-  //         </form>
-  //       </div>
-  //     );
-  //   }
-  // }
+// class Page4 extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {finishedConfirmation: false};
+//     this.handlePurchaseClick = this.handlePurchaseClick.bind(this);
+//   }
+//   handlePurchaseClick(e) {
+//     e.preventDefault();
+//     this.setState({finishedConfirmation: true});
+//     //store data from Page4 in db
+//   }
+//   render() {
+//     return (
+//       <div class="container">
+//         <h1 class="title">Confirmation</h1>
+//         <form>
+//           <h3 style="padding: 2em 0 .5em 0">Click the Purchase Button to Complete Your Transaction</h3>
+//           <table id="confirmation">
+//             <tbody>
+//               <tr>
+//                 <td>Name:</td>
+//                 <td></td>
+//               </tr>
+//             </tbody>
+//           </table>
+//         </form>
+//       </div>
+//     );
+//   }
+// }
+
 
 
   // class Checkout extends React.Component {
